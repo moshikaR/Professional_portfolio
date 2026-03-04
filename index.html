@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moshika R · Security & Software Engineer</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0b0d17;
+            font-family: 'Inter', sans-serif;
+            color: #edeef2;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+        /* animated background glow */
+        
+        .glow-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba( 90, 40, 220, 0.18) 0%, transparent 40%), radial-gradient(circle at 80% 70%, rgba( 0, 230, 200, 0.15) 0%, transparent 45%), #0b0d17;
+            z-index: -2;
+            pointer-events: none;
+        }
+        
+        .glow-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 40%, rgba(180, 60, 255, 0.2) 0%, transparent 50%);
+            animation: breathe 10s ease-in-out infinite alternate;
+            z-index: -1;
+        }
+        
+        @keyframes breathe {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0.9;
+                transform: scale(1.2);
+            }
+        }
+        
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 2rem 3rem;
+        }
+        /* glassmorphic card base */
+        
+        .card {
+            background: rgba(18, 22, 38, 0.7);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(100, 120, 255, 0.15);
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 18px 35px -10px rgba(0, 0, 0, 0.6);
+            transition: all 0.25s ease;
+        }
+        
+        .card:hover {
+            border-color: #9f7aff;
+            box-shadow: 0 0 25px #7a4cf5, 0 0 5px #3fe0d0;
+            transform: translateY(-4px) scale(1.01);
+            background: rgba(22, 28, 48, 0.8);
+        }
+        
+        h1,
+        h2,
+        h3 {
+            font-weight: 600;
+        }
+        
+        h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.8rem;
+            display: inline-block;
+            background: linear-gradient(130deg, #c4b5fd, #7ee0dd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            border-left: 6px solid #a16eff;
+            padding-left: 1.2rem;
+        }
+        /* navigation */
+        
+        .navbar {
+            position: sticky;
+            top: 1rem;
+            z-index: 100;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.2rem 2rem;
+            background: rgba(12, 15, 28, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid #3d3f70;
+            border-radius: 60px;
+            padding: 0.8rem 2.2rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 15px 35px -10px #00000099;
+        }
+        
+        .navbar a {
+            color: #dbdef5;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05rem;
+            padding: 0.4rem 0;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+        }
+        
+        .navbar a:hover {
+            color: white;
+            border-bottom-color: #b37dff;
+            text-shadow: 0 0 8px #c09eff;
+        }
+        /* hero */
+        
+        .hero {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-name {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            background: linear-gradient(to right, #ffffff, #cbb9ff, #98f0e6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-title {
+            font-size: 1.8rem;
+            font-weight: 400;
+            background: linear-gradient(135deg, #c0b7f5, #a8f0eb);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin: 0.3rem 0 1rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            background: rgba(25, 30, 45, 0.6);
+            border-radius: 60px;
+            padding: 0.9rem 2rem;
+            border: 1px solid #343b55;
+        }
+        
+        .contact-info i {
+            color: #6df0e0;
+            margin-right: 0.5rem;
+        }
+        /* about */
+        
+        .about-text {
+            font-size: 1.2rem;
+            color: #cdd6f0;
+            max-width: 85%;
+        }
+        /* education grid */
+        
+        .edu-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            justify-content: center;
+        }
+        
+        .edu-item {
+            flex: 1 1 200px;
+            background: rgba(14, 18, 32, 0.7);
+            border-radius: 1.8rem;
+            padding: 1.6rem 1.5rem;
+            border: 1px solid #2f3553;
+            transition: all 0.2s;
+        }
+        
+        .edu-item:hover {
+            border-color: #b282ff;
+            box-shadow: 0 0 30px #845ef7;
+        }
+        
+        .edu-year {
+            color: #67e6df;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        /* skills chips */
+        
+        .skill-category {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #b4bef5;
+            margin: 1.2rem 0 0.8rem;
+        }
+        
+        .chip-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem 1rem;
+        }
+        
+        .chip {
+            background: rgba(44, 52, 88, 0.5);
+            padding: 0.6rem 1.3rem;
+            border-radius: 40px;
+            border: 1px solid #484f7a;
+            font-size: 0.95rem;
+            transition: 0.15s;
+        }
+        
+        .chip:hover {
+            background: #6d3cff;
+            border-color: #ad99ff;
+            color: white;
+            box-shadow: 0 0 16px #a985ff;
+            transform: scale(1.02);
+        }
+        /* ---------- TIMELINE for projects ---------- */
+        
+        .timeline {
+            position: relative;
+            padding-left: 2.5rem;
+            /* space for vertical line & dots */
+            margin-top: 2rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 8px;
+            bottom: 8px;
+            width: 3px;
+            background: linear-gradient(180deg, #9f7aff, #3fe0d0, #9f7aff);
+            border-radius: 6px;
+            box-shadow: 0 0 15px #b96eff;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.1rem;
+            /* align with line */
+            top: 0.5rem;
+            width: 22px;
+            height: 22px;
+            background: #ffd966;
+            border: 3px solid #0b0d17;
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(159, 122, 255, 0.4), 0 0 25px #c08aff;
+            z-index: 2;
+            transition: 0.2s;
+        }
+        
+        .timeline-item:hover::before {
+            background: #ffffff;
+            box-shadow: 0 0 0 5px #aa7aff, 0 0 40px #f0e4ff;
+        }
+        
+        .timeline-content {
+            background: rgba(18, 24, 42, 0.8);
+            backdrop-filter: blur(4px);
+            border: 1px solid #454e85;
+            border-radius: 2rem;
+            padding: 1.5rem 2rem;
+            transition: all 0.2s;
+        }
+        
+        .timeline-content:hover {
+            border-color: #e2a5ff;
+            box-shadow: 0 0 30px #bc85ff;
+            transform: translateX(6px) scale(1.01);
+        }
+        
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #dad5ff;
+            margin-bottom: 0.4rem;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.8rem 0 0.3rem;
+        }
+        
+        .tech-tag {
+            background: #2b2652;
+            border-radius: 30px;
+            padding: 0.2rem 1.1rem;
+            font-size: 0.8rem;
+            color: #c1bbff;
+            border: 1px solid #7166c9;
+        }
+        /* achievement / certification cards */
+        
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        
+        .cert-item {
+            background: rgba(35, 30, 60, 0.6);
+            border-radius: 50px;
+            padding: 0.6rem 1.8rem;
+            border: 1px solid #6d5cac;
+            font-size: 0.95rem;
+            transition: 0.2s;
+            backdrop-filter: blur(3px);
+        }
+        
+        .cert-item:hover {
+            background: #8a61ff;
+            border-color: #e9caff;
+            box-shadow: 0 0 22px #bc9aff;
+        }
+        
+        .achievement-badge {
+            display: inline-block;
+            background: linear-gradient(145deg, #1c1f40, #181c38);
+            border-radius: 3rem;
+            padding: 0.5rem 1.8rem;
+            margin: 0.2rem;
+            border: 1px solid #6c86ff;
+            font-weight: 500;
+        }
+        /* contact section */
+        
+        .contact-card {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(28, 28, 55, 0.5);
+            backdrop-filter: blur(5px);
+            border-radius: 4rem;
+            padding: 1.8rem 2.8rem;
+            border: 1px solid #5a4f9b;
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .contact-detail i {
+            font-size: 2rem;
+            color: #87f0e6;
+        }
+        
+        hr {
+            border: 0.5px solid #2e3660;
+            margin: 2rem 0;
+        }
+        
+        footer {
+            text-align: center;
+            color: #7c82a6;
+            margin-top: 4rem;
+            font-size: 0.9rem;
+        }
+        /* responsive */
+        
+        @media (max-width: 700px) {
+            .hero-name {
+                font-size: 2.5rem;
+            }
+            .hero-title {
+                font-size: 1.3rem;
+            }
+            .contact-info {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            .navbar {
+                gap: 0.7rem;
+            }
+            .timeline {
+                padding-left: 1.8rem;
+            }
+            .timeline-item::before {
+                left: -1.5rem;
+                width: 18px;
+                height: 18px;
+            }
+            .about-text {
+                max-width: 100%;
+            }
+            .contact-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glow-bg"></div>
+    <div class="container">
+
+        <!-- Sticky Navigation -->
+        <nav class="navbar">
+            <a href="#profile">Profile</a>
+            <a href="#education">Education</a>
+            <a href="#skills">Skills</a>
+            <a href="#projects">Projects</a>
+            <a href="#achievements">Achievements</a>
+            <a href="#certification">Certification</a>
+            <a href="#contact">Contact</a>
+        </nav>
+
+        <!-- HERO / PROFILE SECTION (id=profile) -->
+        <section id="profile">
+            <div class="hero">
+                <div>
+                    <div class="hero-name">Moshika R</div>
+                    <!-- changed profile name as requested -->
+                    <div class="hero-title">Software Engineer · Cybersecurity · Data Analyst</div>
+                    <div class="contact-info">
+                        <span><i class="fas fa-envelope"></i> moshikaramesh2004@gmail.com</span>
+                        <span><i class="fas fa-phone-alt"></i> +91 90251 30479</span>
+                        <span><i class="fas fa-map-marker-alt"></i> Avadi, Chennai</span>
+                    </div>
+                </div>
+            </div>
+            <!-- about card -->
+            <div class="card" style="margin: 1.5rem 0 2rem;">
+                <h2>⚡ About me</h2>
+                <div class="about-text">
+                    Motivated Cybersecurity Analyst with a strong foundation in Python, ethical hacking, network security, and machine learning. Passionate about leveraging AI for anomaly detection and proactive defense. Experienced in software development (Python, Java,
+                    C++), data visualization (Power BI, Tableau), and building secure, intelligent systems. <br/><br/> Quick learner with 1000+ coding problems solved on SkillRack, active on HackerRank/LeetCode, and certified in ethical
+                    hacking, machine learning, and database fundamentals. Eager to contribute to dynamic, tech‑driven teams.
+                </div>
+            </div>
+        </section>
+
+        <!-- EDUCATION SECTION -->
+        <section id="education">
+            <h2>📖 Education</h2>
+            <div class="edu-grid">
+                <div class="edu-item"><span class="edu-year">2022 – 2026</span><br/>B.E. Computer Science<br/>RMK College of Engineering & Technology</div>
+                <div class="edu-item"><span class="edu-year">2020 – 2021</span><br/>Higher Secondary (12th)<br/>Sri Vidhya International Residential School</div>
+                <div class="edu-item"><span class="edu-year">2018 – 2019</span><br/>SSLC (10th)<br/>Chinmaya Vidyalaya</div>
+
+            </div>
+        </section>
+
+        <!-- SKILLS SECTION -->
+        <section id="skills" style="margin-top: 3rem;">
+            <h2>🛠️ Skills</h2>
+            <div class="card">
+                <div class="skill-category">▸ programming languages</div>
+                <div class="chip-container">
+                    <span class="chip">C</span><span class="chip">C++</span><span class="chip">Java</span><span class="chip">Python</span><span class="chip">SQL</span><span class="chip">HTML/CSS</span><span class="chip">JavaScript</span>
+                </div>
+                <div class="skill-category">▸ libraries & frameworks</div>
+                <div class="chip-container">
+                    <span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">Matplotlib</span><span class="chip">Scikit‑learn</span>
+                    <span class="chip">TensorFlow</span><span class="chip">Dialogflow</span><span class="chip">Streamlit</span><span class="chip">Flask</span>
+                    <span class="chip">MobSF</span><span class="chip">Android Studio</span>
+                </div>
+                <div class="skill-category">▸ platforms & tools</div>
+                <div class="chip-container">
+                    <span class="chip">PyCharm</span><span class="chip">Jupyter</span><span class="chip">VS Code</span><span class="chip">Google Colab</span>
+                    <span class="chip">Kali Linux</span><span class="chip">Wireshark</span><span class="chip">Nmap</span><span class="chip">Power BI</span>
+                    <span class="chip">Tableau</span><span class="chip">Excel</span><span class="chip">GitHub</span>
+                </div>
+                <div class="skill-category">▸ soft skills</div>
+                <div class="chip-container">
+                    <span class="chip">problem solving</span><span class="chip">critical thinking</span><span class="chip">attention to detail</span>
+                    <span class="chip">team collaboration</span><span class="chip">communication</span><span class="chip">time management</span>
+                    <span class="chip">active listening</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROJECTS (TIMELINE VERTICAL) -->
+        <section id="projects" style="margin-top: 3rem;">
+            <h2>🚀 Projects </h2>
+            <div class="timeline">
+                <!-- project 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="project-title">🍽️ Food Waste Management & Donation App</div>
+                        <div class="project-tech"><span class="tech-tag">Firebase Auth</span><span class="tech-tag">Google Maps API</span><span class="tech-tag">Java</span><span class="tech-tag">Android Studio</span></div>
+                        <p style="color:#cfd7f0; margin-top: 0.5rem;">Donation platform with real-time location and user authentication.</p>
+                    </div>
+                </div>
+                <!-- project 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="project-title">💳 Fraud Detection in Transactions</div>
+                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">Streamlit</span><span class="tech-tag">Pandas</span><span class="tech-tag">NumPy</span><span class="tech-tag">Scikit‑learn</span></div>
+                        <p style="color:#cfd7f0; margin-top: 0.5rem;">Interactive ML dashboard for anomaly detection in financial data.</p>
+                    </div>
+                </div>
+                <!-- project 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="project-title">📱 Mobile Application Security Analyzer</div>
+                        <div class="project-tech"><span class="tech-tag">MobSF</span><span class="tech-tag">Flask</span><span class="tech-tag">CLI</span><span class="tech-tag">Python</span></div>
+                        <p style="color:#cfd7f0; margin-top: 0.5rem;">Static analysis tool to detect vulnerabilities in mobile apps.</p>
+                    </div>
+                </div>
+                <!-- project 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="project-title">🫀 Hawk‑Inspired Federated Learning (Heart Disease)</div>
+                        <div class="project-tech"><span class="tech-tag">Python</span><span class="tech-tag">DNN</span><span class="tech-tag">FedAvg</span><span class="tech-tag">HIO</span><span class="tech-tag">Kaggle</span></div>
+                        <p style="color:#cfd7f0; margin-top: 0.5rem;">Privacy‑preserving prediction with federated learning + Hawk optimisation.</p>
+                    </div>
+                </div>
+                <!-- project 5 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="project-title">📊 Interactive Dashboards (Power BI & Tableau)</div>
+                        <div class="project-tech"><span class="tech-tag">Power BI</span><span class="tech-tag">Tableau</span><span class="tech-tag">Excel</span><span class="tech-tag">Data Viz</span></div>
+                        <p style="color:#cfd7f0; margin-top: 0.5rem;">Designed business dashboards for PwC & Deloitte virtual experiences.</p>
+                    </div>
+                </div>
+                <!-- project 6 -->
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <div class="project-title">👤 Personal Portfolio Website</div>
+                        <div class="project-tech"><span class="tech-tag">HTML</span><span class="tech-tag">CSS</span><span class="tech-tag">JavaScript</span></div>
+                        <p style="color:#cfd7f0; margin-top: 0.5rem;">Responsive frontend portfolio (the one you're viewing!)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ACHIEVEMENTS SECTION (separate) -->
+        <section id="achievements" style="margin-top: 3rem;">
+            <h2>🏆 Achievements</h2>
+            <div class="card">
+                <div class="badge-container" style="justify-content: center;">
+                    <span class="achievement-badge"><i class="fas fa-code"></i> 1000+ SkillRack</span>
+                    <span class="achievement-badge"><i class="fab fa-hackerrank"></i> 40+ HackerRank</span>
+                    <span class="achievement-badge"><i class="fas fa-laptop-code"></i> 20+ LeetCode</span>
+                    <span class="achievement-badge"><i class="fas fa-award"></i> IBM AI Badge</span>
+                    <span class="achievement-badge"><i class="fas fa-cloud"></i> AWS Conference</span>
+                    <span class="achievement-badge"><i class="fas fa-database"></i> MongoDB Badge</span>
+                    <span class="achievement-badge"><i class="fas fa-certificate"></i> TOEFL completed</span>
+                    <span class="achievement-badge"><i class="fas fa-globe"></i> 5+ webinars</span>
+                </div>
+                <div style="margin-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 1rem;">
+                    <span class="badge" style="background: #2b2455;">⭐ solved 1000+ on SkillRack</span>
+                    <span class="badge" style="background: #2b2455;">⭐ IBM AI & ML badges</span>
+                    <span class="badge" style="background: #2b2455;">⭐ attended AWS conference</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CERTIFICATION SECTION (separate) -->
+        <section id="certification" style="margin-top: 3rem;">
+            <h2>📜 Certifications</h2>
+            <div class="card">
+                <div style="display: flex; flex-wrap: wrap; gap: 0.8rem;">
+                    <span class="cert-item">NPTEL Ethical Hacking</span>
+                    <span class="cert-item">NPTEL Software Testing</span>
+                    <span class="cert-item">IBM SkillBuild Python 101</span>
+                    <span class="cert-item">IBM ML with Python</span>
+                    <span class="cert-item">MongoDB Basics</span>
+                    <span class="cert-item">TensorFlow Keras Bootcamp</span>
+                    <span class="cert-item">Simplilearn MS Excel</span>
+                    <span class="cert-item">Infosys DBMS/Java/C++/AI</span>
+                    <span class="cert-item">SkillRack SQL, Java, Python, C</span>
+                    <span class="cert-item">Scaler SQL</span>
+                    <span class="cert-item">Forage: Cyber/Data/PBI/Tableau</span>
+                    <span class="cert-item">Udemy JavaScript</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact" style="margin-top: 3rem;">
+            <h2>📬 Contact</h2>
+            <div class="contact-card">
+                <div class="contact-detail"><i class="fas fa-envelope"></i> moshikaramesh2004@gmail.com</div>
+                <div class="contact-detail"><i class="fas fa-phone-alt"></i> +91 90251 30479</div>
+                <div class="contact-detail"><i class="fas fa-map-marker-alt"></i> Avadi, Chennai</div>
+            </div>
+            <div style="text-align: center; margin-top: 1rem; color: #b3b9e0;">
+                <i class="fas fa-globe"></i> available for opportunities · let's connect
+            </div>
+        </section>
+
+
+        <footer>
+            <p>✨ designed with interactive timeline & glow — Moshika R ✨</p>
+        </footer>
+
+    </div>
+
+
+</html>
